@@ -1,0 +1,11 @@
+# Per-TV snapshots contain your model, app list and network details. Keep them local
+# unless you deliberately want them in the repo.
+baseline/
+# Pulled app data can contain login tokens. Never commit it.
+backup/
+*.wgt
+.omc/
+# Generated from your TV by scripts/prepare-launcher.py (app icons are the apps' trademarks).
+launcher/apps.js
+launcher/icons/
+launcher/wallpapers/

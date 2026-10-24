@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=1920, height=1080">
+    <title>Shelf</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="stage">
+    <div class="wall" id="wallA"></div>
+    <div class="wall" id="wallB"></div>
+    <div class="scrim"></div>
+
+    <header class="topbar">
+        <span class="place" id="place"></span>
+        <time id="clock"></time>
+    </header>
+
+    <section class="shelf">
+        <h1 id="shelfTitle"></h1>
+        <p id="shelfHint"></p>
+    </section>
+
+    <nav class="rows">
+        <div class="row dock" id="dock"></div>
+        <div class="row more" id="more"></div>
+    </nav>
+
+    <div class="toast" id="toast"></div>
+</div>
+
+    <script src="apps.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

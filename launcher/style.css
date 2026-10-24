@@ -1,0 +1,127 @@
+/* The layout is a fixed 1920x1080 stage that app.js scales to the real viewport (this TV
+ * renders web apps at 3840x2160 CSS px). Avoid CSS newer than Chromium 76 (Tizen 6.0):
+ * no `inset`, no flex `gap`. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+    color: #f5f5f7;
+    font-family: "SamsungOne", "Helvetica Neue", "Inter", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+#stage {
+    position: absolute;
+    left: 0; top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+}
+
+.wall {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1.6s ease;
+    transform: scale(1.04);
+}
+.wall.on { opacity: 1; }
+
+/* Keep text readable on bright photos: dark at the top and bottom, clear in the middle. */
+.scrim {
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background:
+        linear-gradient(to bottom, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 22%),
+        linear-gradient(to top, rgba(0,0,0,.82) 0%, rgba(0,0,0,.35) 45%, rgba(0,0,0,0) 70%);
+}
+
+.topbar {
+    position: absolute;
+    top: 48px; left: 96px; right: 96px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 30px;
+    font-weight: 500;
+    letter-spacing: .2px;
+}
+.place { opacity: .7; }
+
+.shelf {
+    position: absolute;
+    left: 96px; bottom: 520px;
+    transition: opacity .25s ease;
+}
+.shelf h1 {
+    font-size: 84px;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    text-shadow: 0 4px 24px rgba(0,0,0,.4);
+}
+.shelf p {
+    margin-top: 10px;
+    font-size: 30px;
+    opacity: .75;
+}
+
+.rows {
+    position: absolute;
+    left: 96px; right: 0; bottom: 64px;
+}
+.row {
+    display: flex;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .35s ease;
+}
+.dock { margin-bottom: 52px; }
+
+.tile {
+    flex: none;
+    position: relative;
+    margin-right: 40px;
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    transition: transform .2s cubic-bezier(.2,.8,.2,1), box-shadow .2s ease, filter .2s ease;
+}
+.tile img { height: 100%; }
+.tile .label {
+    font-size: 28px;
+    font-weight: 600;
+    padding: 0 16px;
+    text-align: center;
+}
+.dock .tile { width: 320px; height: 180px; }
+.more .tile { width: 224px; height: 126px; filter: brightness(.5); }
+
+.tile.focus {
+    transform: scale(1.1);
+    box-shadow: 0 24px 50px rgba(0,0,0,.55), 0 0 0 4px rgba(255,255,255,.9);
+    filter: none;
+    z-index: 2;
+}
+
+/* When focus moves to the lower row, the dock dims and the lower row lights up. */
+.rows.low .dock .tile:not(.focus) { filter: brightness(.5); }
+.rows.low .more .tile:not(.focus) { filter: brightness(.85); }
+
+.toast {
+    position: absolute;
+    left: 50%; top: 120px;
+    transform: translateX(-50%);
+    padding: 18px 36px;
+    border-radius: 999px;
+    background: rgba(30,30,32,.85);
+    font-size: 28px;
+    opacity: 0;
+    transition: opacity .3s ease;
+}
+.toast.on { opacity: 1; }
